@@ -29,27 +29,7 @@ jobs:
       #  with:
       #    platforms: ${{ inputs.platforms }}
 
-      - name: Log in to Red Hat Registry
-        uses: redhat-actions/podman-login@v1
-        with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ secrets.QUAY_USER_NAME }}
-          password: ${{ secrets.QUAY_PASSWORD }}
-
-      - name: Docker meta
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-          tags: |
-            type=schedule
-            type=ref,event=branch,enable=${{ github.ref_name != 'master' && inputs.custom_tag == '' }}
-            type=raw,value=latest,enable=${{ github.ref_name == 'master' }}
-            type=raw,value=nightly,enable=${{ github.ref_name == 'master' }}
-            ${{ inputs.custom_tag }}
-            type=ref,event=tag
-            type=ref,event=pr
-
+ 
       - uses: actions/checkout@v5
 
       - name: Build image
