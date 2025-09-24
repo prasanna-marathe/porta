@@ -1,7 +1,7 @@
 name: Build porta oci container image
 
 on:
-  workflow_dispatch:
+  workflow_call:
     inputs:
       platforms:
         description: comma-separated list of platforms to build for, e.g. linux/amd64,linux/s390x,linux/ppc64le
